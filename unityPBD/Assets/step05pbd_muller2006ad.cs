@@ -27,6 +27,10 @@ public class step05pbd_muller2006ad : MonoBehaviour
         frame++;
         if(frame%2==0) return; //希望看到與 processingPDB類似結果,所以frameRate改了一下
 
+        for(int i=1; i<N; i++){
+            pos0[i] = sphere[i].transform.position;
+        }
+
         solver();
         
         for(int i=1; i<N; i++){

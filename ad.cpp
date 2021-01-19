@@ -11,10 +11,10 @@ public:
         v[0]=s;
         for( int i=1; i<=N; i++) v[i]=0.0f;
     }
-    float val(){
+    float &val(){
         return v[0];
     }
-    float val(int i){
+    float &val(int i){
         return v[i];
     }
     void val(float s){
@@ -24,7 +24,7 @@ public:
         v[i]=s;
     }
 
-    dfloat & operator = ( dfloat & a ){
+    dfloat & operator = ( const dfloat & a ){
         for(int i=0; i<=N; i++) v[i] = a.v[i];
         return *this;
     }
@@ -35,20 +35,20 @@ public:
         return *this;
     }
 
-    dfloat & operator += (dfloat & a){
+    dfloat & operator += (const dfloat & a){
         for(int i=0; i<=N; i++) v[i] += a.v[i];
         return *this;
     }
-    dfloat & operator -= (dfloat & a){
+    dfloat & operator -= (const dfloat & a){
         for(int i=0; i<=N; i++) v[i] -= a.v[i];
         return *this;
     }
-    dfloat & operator *= (dfloat & a){
+    dfloat & operator *= (const dfloat & a){
         for(int i=1; i<=N; i++) v[i] = v[i]*a.v[0]+ v[0]*a.v[i];
         v[0] *= a.v[0];
         return *this;
     }
-    dfloat & operator /= (dfloat & a){
+    dfloat & operator /= (const dfloat & a){
         float g = a.v[0]*a.v[0];
         for( int i=1; i<=N; i++) v[i] = (v[i]*a.v[0]-v[0]*a.v[i])/g;
         v[0] /= a.v[0];
@@ -75,46 +75,23 @@ public:
         for( int i=0; i<=N; i++) c.v[i] = -v[i];
         return c;
     }
-//    dfloat operator + (dfloat &b){
-//        dfloat c;//https://stackoverflow.com/questions/13544364/over-loading-operator-must-take-either-zero-or-one-arguments
-//        for(int i=0; i<=N; i++) c.v[i] = this.v[i]+b.v[i];
-//        return c;
-//    }
-//    dfloat operator - (dfloat &b){
-//        dfloat c;
-//        for(int i=0; i<=N; i++) c.v[i] = this.v[i]-b.v[i];
-//        return c;
-//    }
-//    dfloat operator * (dfloat &b){
-//        dfloat c;
-//        c.v[0] = this.v[0]* b.v[0];
-//        for(int i=1; i<=N; i++) c.v[i] = this.v[i]*b.v[0] + this.v[0]*b.v[i];
-//        return c;
-//    }
-//    dfloat operator / (dfloat &b){
-//        dfloat c;
-//        c.v[0] = this.v[0]/b.v[0];
-//        float g = b.v[0]*b.v[0];
-//        for(int i=1; i<=N; i++) c.v[i] = (this.v[i]*b.v[0]-this.v[0]*b.v[i])/g;
-//        return c;
-//    }
-    friend dfloat operator + (dfloat &a, dfloat &b){
+    friend dfloat operator + (const dfloat &a, const dfloat &b){
         dfloat c;//https://stackoverflow.com/questions/13544364/over-loading-operator-must-take-either-zero-or-one-arguments
         for(int i=0; i<=N; i++) c.v[i] = a.v[i]+b.v[i];
         return c;
     }
-    friend dfloat operator - (dfloat &a, dfloat &b){
+    friend dfloat operator - (const dfloat &a, const dfloat &b){
         dfloat c;
         for(int i=0; i<=N; i++) c.v[i] = a.v[i]-b.v[i];
         return c;
     }
-    friend dfloat operator * (dfloat &a, dfloat &b){
+    friend dfloat operator * (const dfloat &a, const dfloat &b){
         dfloat c;
         c.v[0] = a.v[0]* b.v[0];
         for(int i=1; i<=N; i++) c.v[i] = a.v[i]*b.v[0] + a.v[0]*b.v[i];
         return c;
     }
-    friend dfloat operator / (dfloat &a, dfloat &b){
+    friend dfloat operator / (const dfloat &a, const dfloat &b){
         dfloat c;
         c.v[0] = a.v[0]/b.v[0];
         float g = b.v[0]*b.v[0];
@@ -122,61 +99,61 @@ public:
         return c;
     }
     //https://stackoverflow.com/questions/4622330/operator-overloading-member-function-vs-non-member-function
-    friend dfloat operator + (float s, dfloat &a ){
+    friend dfloat operator + (float s, const dfloat &a ){
         dfloat c;
         c.v[0] = s+a.v[0];
         for(int i=1; i<=N; i++) c.v[i] = a.v[i];
         return c;
     }
-    friend dfloat operator + (dfloat &a, float s ){
+    friend dfloat operator + (const dfloat &a, float s ){
         dfloat c;
         c.v[0] = a.v[0]+s;
         for(int i=1; i<=N; i++) c.v[i] = a.v[i];
         return c;
     }
-    friend dfloat operator - (float s, dfloat &a){
+    friend dfloat operator - (float s, const dfloat &a){
         dfloat c;
         c.v[0] = s-a.v[0];
         for(int i=1; i<=N; i++) c.v[i] = -a.v[i];
         return c;
     }
-    friend dfloat operator - (dfloat &a, float s){
+    friend dfloat operator - (const dfloat &a, float s){
         dfloat c;
         c.v[0] = a.v[0]-s;
         for(int i=1; i<=N; i++) c.v[i] = a.v[i];
         return c;
     }
-    friend dfloat operator * (float s, dfloat &a){
+    friend dfloat operator * (float s, const dfloat &a){
         dfloat c;
         for(int i=0; i<=N; i++) c.v[i] = s*a.v[i];
         return c;
     }
-    friend dfloat operator * (dfloat &a, float s){
+    friend dfloat operator * (const dfloat &a, float s){
         dfloat c;
         for(int i=0; i<=N; i++) c.v[i] = a.v[i]*s;
         return c;
     }
-    friend dfloat operator / (float s, dfloat &a){
+    friend dfloat operator / (float s, const dfloat &a){
         dfloat c;
         c.v[0] = s/a.v[0];
         float g = a.v[0]*a.v[0];
         for(int i=1; i<=N; i++)c.v[i] = -s*a.v[i]/g;
         return c;
     }
-    friend dfloat operator / (dfloat &a, float s){
+    friend dfloat operator / (const dfloat &a, float s){
         dfloat c;
         c.v[0] = s/a.v[0];
         float g = a.v[0]*a.v[0];
         for(int i=1; i<=N; i++)c.v[i] = -s*a.v[i]/g;
         return c;
     }
-    friend dfloat dsqrt (dfloat & a){
+    friend dfloat dsqrt (const dfloat & a){
         dfloat c;
         c.v[0] = sqrtf(a.v[0]);
         for(int i=1; i<=N; i++) c.v[i] = 0.5f*a.v[i]/c.v[0];
         return c;
     }
-    dfloat dacos( dfloat & a){
+    dfloat dacos(const dfloat & a){
         dfloat c;
         c.v[0] = (float) acos(a.v[0]);
         float g = -1.0f/sqrtf(1-a.v[0]*a.v[0]);
@@ -223,10 +200,11 @@ int main()
     dfloat<2> x, y;
     dfloat<2> u, v;
     dfloat<2> f;
-//   u.val(0) = 1.0f; v.val(1) = 1.0f;
-    u+u+u;
-//    x = y + x + u*u;
-//    y = x*y + x*v;
-//    f = x*x + y*y + u*u + v*v;
+
+    u.val(0) = 1.0f; v.val(1) = 1.0f;
+
+    x = y + x + u*u;
+    y = x*y + x*v;
+    f = x*x + y*y + u*u + v*v;
 
 }

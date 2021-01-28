@@ -8,11 +8,11 @@ Introduction (介紹)
 
 Automatic Differentiation (C++ implementation), Chapter 14 in Stam's book.
 
+- glutPBD 目錄, 利用 ad.cpp 的 class dfloat<6> 來解 Position Based Dynamics 問題, 並用 OpenGL/GLUT 繪製
+- unityPBD 目錄, 利用 Unity/C# 改寫 ad 的 operator overloading, 成功在 step01pbd_oneSpring.cs 做出簡單 Position Based Dynamics
 - ad.cpp 將 Stam 的程式, 做對應的修改, 可在 CodeBlocks 20.03 (g++ 8.1.0) 及 CodeBlocks 17.12 (g++ 5.1.0) compile 成功
 - ad_explain.cpp 解釋程碼的意思、我做的修改/修改原因
 - ~~ad_old.cpp 原本 Stam 在書中的程式碼, 無法編譯~~
-- glutPBD 目錄, 利用 ad.cpp 的 class dfloat<6> 來解 Position Based Dynamics 問題, 並用 OpenGL/GLUT 繪製
-- unityPBD 目錄, 正在改用 C# 實作 operator overloading 看能不能也做出 Position Based Dynamics, 在 Unity 繪製
 
 - Reference: Jos Stam, *The Art of Fluid Animation*, 2016. 
 

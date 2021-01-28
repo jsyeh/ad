@@ -7,7 +7,7 @@ AD 自動微分 實作PBD (Unity)
 這個程式的目的, 是要確認我們真的了解 Stam 書中的 AD 程式碼的意思。
 經過多次審視, 確認我們真的了解了。
 
-- Reference: Matthias Müller, et. al, Position Based Dynamics, *VRIPHYS*, (2006) https://matthias-research.github.io/pages/publications/posBasedDyn.pdf
+- Reference: Matthias Müller, et. al, [Position Based Dynamics](https://matthias-research.github.io/pages/publications/posBasedDyn.pdf), *VRIPHYS*, (2006) 
 - Reference: Jos Stam, *The Art of Fluid Animation*, 2016. 
 
 

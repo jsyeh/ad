@@ -42,7 +42,7 @@
 			<Add library="gdi32" />
 			<Add directory="C:/Users/User/Desktop/freeglut/lib" />
 		</Linker>
-		<Unit filename="main.cpp" />
+		<Unit filename="glutPBD.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

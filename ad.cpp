@@ -142,9 +142,7 @@ public:
     }
     friend dfloat operator / (const dfloat &a, float s){
         dfloat c;
-        c.v[0] = s/a.v[0];
-        float g = a.v[0]*a.v[0];
-        for(int i=1; i<=N; i++)c.v[i] = -s*a.v[i]/g;
+        for( int i=1; i<=N; i++ ) c.v[i] = a.v[i]/s;
         return c;
     }
     friend dfloat dsqrt (const dfloat & a){
@@ -153,7 +151,7 @@ public:
         for(int i=1; i<=N; i++) c.v[i] = 0.5f*a.v[i]/c.v[0];
         return c;
     }
-    dfloat dacos(const dfloat & a){
+    friend dfloat dacos(const dfloat & a){
         dfloat c;
         c.v[0] = (float) acos(a.v[0]);
         float g = -1.0f/sqrtf(1-a.v[0]*a.v[0]);

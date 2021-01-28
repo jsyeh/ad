@@ -25,13 +25,14 @@
 template <int N> class dfloat
 {
 public:
-    float v[N+1];
-    dfloat(){
-        for( int i=0; i<=N; i++) v[i]=0.0f;
+    float v[N+1]; /// change this to your favorite "pretend real."
+    /// and all references to floats. Use a typedef or a define or whatever.
+    dfloat(){ ///初始化, 都設成0
+        for( int i=0; i<=N; i++ ) v[i]=0.0f;
     }
-    dfloat(float s){
+    dfloat(float s){ ///初始化第1個值, 其他都設0
         v[0]=s;
-        for( int i=1; i<=N; i++) v[i]=0.0f;
+        for( int i=1; i<=N; i++ ) v[i]=0.0f;
     }
     float &val(){ /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
         return v[0];
@@ -39,158 +40,150 @@ public:
     float &val(int i){ /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
         return v[i];
     }
-    void val(float s){
+    void val(float s){ ///上面是整數index(取出),下面是float值(設定)
         v[0]=s;
     }
-    void val(int i, float s){
+    void val(int i, float s){ ///設定值
         v[i]=s;
     }
 
     /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
     dfloat & operator = ( const dfloat & a ){ /// 這裡增加 const, 承諾 rvalue 不會被修改
-        for(int i=0; i<=N; i++) v[i] = a.v[i];
+        for( int i=0; i<=N; i++ ) v[i] = a.v[i];
         return *this;
     }
 
-    /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
     dfloat & operator = ( float s ){
         v[0]=s;
-        for(int i=1; i<=N; i++) v[i]=0.0f;
+        for( int i=1; i<=N; i++ ) v[i]=0.0f;
         return *this;
     }
 
-    /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
     dfloat & operator += (const dfloat & a){ /// 這裡增加 const, 承諾 rvalue 不會被修改
-        for(int i=0; i<=N; i++) v[i] += a.v[i];
+        for( int i=0; i<=N; i++ ) v[i] += a.v[i];
         return *this;
     }
-    /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
     dfloat & operator -= (const dfloat & a){ /// 這裡增加 const, 承諾 rvalue 不會被修改
-        for(int i=0; i<=N; i++) v[i] -= a.v[i];
+        for( int i=0; i<=N; i++ ) v[i] -= a.v[i];
         return *this;
     }
-    /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
     dfloat & operator *= (const dfloat & a){ /// 這裡增加 const, 承諾 rvalue 不會被修改
-        for(int i=1; i<=N; i++) v[i] = v[i]*a.v[0]+ v[0]*a.v[i];
+        for( int i=1; i<=N; i++ ) v[i] = v[i]*a.v[0]+ v[0]*a.v[i];
         v[0] *= a.v[0];
         return *this;
     }
-    /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
     dfloat & operator /= (const dfloat & a){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         float g = a.v[0]*a.v[0];
-        for( int i=1; i<=N; i++) v[i] = (v[i]*a.v[0]-v[0]*a.v[i])/g;
+        for( int i=1; i<=N; i++ ) v[i] = (v[i]*a.v[0]-v[0]*a.v[i])/g;
         v[0] /= a.v[0];
         return *this;
     }
-    /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
     dfloat & operator += (float s){
         v[0] += s;
         return *this;
     }
-    /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
     dfloat & operator -= (float s){
         v[0] -= s;
         return *this;
     }
-    /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
     dfloat & operator *= (float s){
-        for(int i=0; i<=N; i++)v[i] *= s;
+        for( int i=0; i<=N; i++ ) v[i] *= s;
         return *this;
     }
-    /// 這裡增加 & 變 reference 參考, 讓 lvalue 可被修改
     dfloat & operator /= (float s){
-        for(int i=0; i<=N; i++) v[i] /=s;
+        for( int i=0; i<=N; i++ ) v[i] /=s;
         return *this;
     }
     dfloat operator - (void){
         dfloat c;
-        for( int i=0; i<=N; i++) c.v[i] = -v[i];
+        for( int i=0; i<=N; i++ ) c.v[i] = -v[i];
         return c;
     }
+
+    ///https://stackoverflow.com/questions/4622330/operator-overloading-member-function-vs-non-member-function
     /// 以下增加 friend, 讓 operator overloading 可以輸入 (左,右) 2個參數
     friend dfloat operator + (const dfloat &a, const dfloat &b){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c; ///https://stackoverflow.com/questions/13544364/over-loading-operator-must-take-either-zero-or-one-arguments
-        for(int i=0; i<=N; i++) c.v[i] = a.v[i]+b.v[i];
+        for( int i=0; i<=N; i++ ) c.v[i] = a.v[i]+b.v[i];
         return c;
     }
     friend dfloat operator - (const dfloat &a, const dfloat &b){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
-        for(int i=0; i<=N; i++) c.v[i] = a.v[i]-b.v[i];
+        for( int i=0; i<=N; i++ ) c.v[i] = a.v[i]-b.v[i];
         return c;
     }
     friend dfloat operator * (const dfloat &a, const dfloat &b){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
-        c.v[0] = a.v[0]* b.v[0];
-        for(int i=1; i<=N; i++) c.v[i] = a.v[i]*b.v[0] + a.v[0]*b.v[i];
+        c.v[0] = a.v[0] * b.v[0];
+        for( int i=1; i<=N; i++ ) c.v[i] = a.v[i]*b.v[0] + a.v[0]*b.v[i];
         return c;
     }
     friend dfloat operator / (const dfloat &a, const dfloat &b){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
-        c.v[0] = a.v[0]/b.v[0];
+        c.v[0] = a.v[0] / b.v[0];
         float g = b.v[0]*b.v[0];
-        for(int i=1; i<=N; i++) c.v[i] = (a.v[i]*b.v[0]-a.v[0]*b.v[i])/g;
+        for( int i=1; i<=N; i++ ) c.v[i] = (a.v[i]*b.v[0]-a.v[0]*b.v[i])/g;
         return c;
     }
-    ///https://stackoverflow.com/questions/4622330/operator-overloading-member-function-vs-non-member-function
     friend dfloat operator + (float s, const dfloat &a ){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
-        c.v[0] = s+a.v[0];
-        for(int i=1; i<=N; i++) c.v[i] = a.v[i];
+        c.v[0] = s + a.v[0];
+        for( int i=1; i<=N; i++ ) c.v[i] = a.v[i];
         return c;
     }
     friend dfloat operator + (const dfloat &a, float s ){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
-        c.v[0] = a.v[0]+s;
-        for(int i=1; i<=N; i++) c.v[i] = a.v[i];
+        c.v[0] = a.v[0] + s;
+        for( int i=1; i<=N; i++ ) c.v[i] = a.v[i];
         return c;
     }
     friend dfloat operator - (float s, const dfloat &a){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
-        c.v[0] = s-a.v[0];
-        for(int i=1; i<=N; i++) c.v[i] = -a.v[i];
+        c.v[0] = s - a.v[0];
+        for( int i=1; i<=N; i++ ) c.v[i] = -a.v[i];
         return c;
     }
     friend dfloat operator - (const dfloat &a, float s){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
-        c.v[0] = a.v[0]-s;
-        for(int i=1; i<=N; i++) c.v[i] = a.v[i];
+        c.v[0] = a.v[0] - s;
+        for( int i=1; i<=N; i++ ) c.v[i] = a.v[i];
         return c;
     }
     friend dfloat operator * (float s, const dfloat &a){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
-        for(int i=0; i<=N; i++) c.v[i] = s*a.v[i];
+        for( int i=0; i<=N; i++ ) c.v[i] = s*a.v[i];
         return c;
     }
     friend dfloat operator * (const dfloat &a, float s){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
-        for(int i=0; i<=N; i++) c.v[i] = a.v[i]*s;
+        for( int i=0; i<=N; i++ ) c.v[i] = a.v[i]*s;
         return c;
     }
     friend dfloat operator / (float s, const dfloat &a){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
         c.v[0] = s/a.v[0];
         float g = a.v[0]*a.v[0];
-        for(int i=1; i<=N; i++)c.v[i] = -s*a.v[i]/g;
+        for( int i=1; i<=N; i++ ) c.v[i] = -s*a.v[i]/g;
         return c;
     }
     friend dfloat operator / (const dfloat &a, float s){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
-        c.v[0] = s/a.v[0];
-        float g = a.v[0]*a.v[0];
-        for(int i=1; i<=N; i++)c.v[i] = -s*a.v[i]/g;
+        ///c.v[0] = s/a.v[0]; //TODO:這裡我有打錯,需回去同步ad.cpp及ad_explain.cpp
+        ///float g = a.v[0]*a.v[0]; //TODO
+        for( int i=1; i<=N; i++ ) c.v[i] = a.v[i]/s; ///TODO
         return c;
     }
     friend dfloat dsqrt (const dfloat & a){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
         c.v[0] = sqrtf(a.v[0]);
-        for(int i=1; i<=N; i++) c.v[i] = 0.5f*a.v[i]/c.v[0];
+        for( int i=1; i<=N; i++ ) c.v[i] = 0.5f * a.v[i] / c.v[0];
         return c;
     }
-    dfloat dacos(const dfloat & a){ /// 這裡增加 const, 承諾 rvalue 不會被修改
+    friend dfloat dacos(const dfloat & a){ /// 這裡增加 const, 承諾 rvalue 不會被修改
         dfloat c;
         c.v[0] = (float) acos(a.v[0]);
         float g = -1.0f/sqrtf(1-a.v[0]*a.v[0]);
-        for( int i=1; i<=N; i++) c.v[i] = a.v[i]*g;
+        for( int i=1; i<=N; i++ ) c.v[i] = a.v[i] * g;
         return c;
     }
 };
@@ -233,6 +226,26 @@ float x1= 0.5, y1=0, z1=0;
 float x2=-0.5, y2=0, z2=0;
 dfloat<3> dx1, dy1, dz1;///裡面都會是0
 dfloat<3> dx2, dy2, dz2;///裡面都會是0
+void solvePBD()
+{
+    ///float C = abs(v1-v2) - 原始的長度
+    float dx=x1-x2, dy=y1-y2, dz=z1-z2;
+    float C = sqrt(dx*dx+dy*dy+dz*dz) - 0.8;
+
+    dx1.val(0)=x1; ///Q: 真的是這樣做嗎?
+    dx2.val(1)=x2;
+    ///沒設定的,都會是0
+
+    dfloat<3> ddx=dx1-dx2, ddy=dy1-dy2, ddz=dz1-dz2;
+    dfloat<3> gC = dsqrt(ddx*ddx+ddy*ddy+ddz*ddz) - 0.8;
+    printf("%.3f %.3f %.3f\n", gC.val(0), gC.val(1), gC.val(2));
+    ///TODO: 不確定是不是對的, 要讀論文,看接下來怎麼用 gradient來改座標
+    /// https://matthias-research.github.io/pages/publications/posBasedDyn.pdf
+    ///因 Stam一定是用 C/C++ 配 GLUT
+    float len2 = ( gC.val(0)*gC.val(0)+gC.val(1)*gC.val(1)+gC.val(2)*gC.val(2) );
+    x1+=(-C/len2)*gC.val(0);
+    x2+=(-C/len2)*gC.val(1);
+}
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -246,23 +259,16 @@ void display()
     glPopMatrix();
     glutSwapBuffers();
 }
+void keyboard(unsigned char key, int x, int y)
+{
+    solvePBD();///按keyboard時, 執行一次 solvePBD()
+    glutPostRedisplay();///順手重畫畫面
+}
 int main(int argc, char**argv)
 {
-    ///float C = abs(v1-v2) - ??
-    ///float dx=x1-x2, dy=y1-y2, dz=z1-z2;
-    ///float C = sqrt(dx*dx+dy*dy+dz*dz) - 0.8;
-    dx1.val(0)=x1; ///Q: 真的是這樣做嗎?
-    dx2.val(0)=x2;
-    ///沒設定的,都會是0
-
-    dfloat<3> dx=dx1-dx2, dy=dy1-dy2, dz=dz1-dz2;
-    dfloat<3> C = dsqrt(dx*dx+dy*dy+dz*dz) - 0.8;
-    printf("%.3f %.3f %.3f\n", C.val(0), C.val(1), C.val(2));
-    ///TODO: 不確定是不是對的, 要讀論文,看接下來怎麼用 gradient來改座標
-    ///因 Stam一定是用 C/C++ 配 GLUT
-
     glutInit(&argc, argv);
     glutCreateWindow("glutPDB");
     glutDisplayFunc(display);
+    glutKeyboardFunc(keyboard);
     glutMainLoop();
 }

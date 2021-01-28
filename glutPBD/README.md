@@ -7,7 +7,7 @@ AD 自動微分 實作PBD
 這個程式的目的, 是要確認我們真的了解 Stam 書中的 AD 程式碼的意思。
 經過多次審視, 確認我們真的了解了。
 
-- Reference: Matthias Müller, et. al, Position Based Dynamics, *VRIPHYS*, (2006) https://matthias-research.github.io/pages/publications/posBasedDyn.pdf
+- Reference: Matthias Müller, et. al, [Position Based Dynamics](https://matthias-research.github.io/pages/publications/posBasedDyn.pdf), *VRIPHYS*, (2006) 
 - Reference: Jos Stam, *The Art of Fluid Animation*, 2016. 
 
 OpenGL/GLUT環境
@@ -239,11 +239,11 @@ public:
         for( int i=0; i<=N; i++ ) c.v[i] = -v[i];
         return c;
     }
-
+    
     ///https://stackoverflow.com/questions/4622330/operator-overloading-member-function-vs-non-member-function
     /// 以下增加 friend, 讓 operator overloading 可以輸入 (左,右) 2個參數
     friend dfloat operator + (const dfloat &a, const dfloat &b){ /// 這裡增加 const, 承諾 rvalue 不會被修改
-        dfloat c; ///https://stackoverflow.com/questions/13544364/over-loading-operator-must-take-either-zero-or-one-arguments
+        dfloat c; 
         for( int i=0; i<=N; i++ ) c.v[i] = a.v[i]+b.v[i];
         return c;
     }

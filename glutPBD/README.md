@@ -1,5 +1,5 @@
-AD 自動微分 實作PBD
-===================
+用 AD 實作 PBD (OpenGL)
+======================
 這裡使用 OpenGL/GLUT 的3D繪圖環境, 
 嘗試實作 Position Based Dynamic 論文裡面最簡單的單一彈簧 (one stretch spring)。
 其中 gradient 計算方式使用 Stam 書中第14章的 Automatic Differentiation C++ 版本。

@@ -32,12 +32,12 @@ public class step01pbd_oneSpring : MonoBehaviour
         //以下已利用 Automatic Differentiation 技巧, 配合 operator overloading 完成
         ///細讀 Stam 第14章, 了解 (1) 控制變數 x1,y1,z1, x2,y2,z2 有6個, 所以 dfloat<6>
         ///(2) 有些項要設1, 因為 「自己對自己微分」會得到1
-        dfloat dx1 = new dfloat(x1);
-        dfloat dy1 = new dfloat(y1);
-        dfloat dz1 = new dfloat(z1); ///初始原值, 其他裡面都會是0
-        dfloat dx2 = new dfloat(x2);
-        dfloat dy2 = new dfloat(y2);
-        dfloat dz2 = new dfloat(z2); ///初始原值, 其他裡面都會是0
+        dfloat dx1 = new dfloat(6, x1); //為了不同的 dfloat.N, 所以我們建構子要指明N的值是6,方便 多spring
+        dfloat dy1 = new dfloat(6, y1);
+        dfloat dz1 = new dfloat(6, z1); ///初始原值, 其他裡面都會是0
+        dfloat dx2 = new dfloat(6, x2);
+        dfloat dy2 = new dfloat(6, y2);
+        dfloat dz2 = new dfloat(6, z2); ///初始原值, 其他裡面都會是0
         dx1.val(1)=1; ///[1]項 是對 變數1 微分
         dy1.val(2)=1; ///[2]項 是對 變數2 微分
         dz1.val(3)=1; ///[3]項 是對 變數3 微分

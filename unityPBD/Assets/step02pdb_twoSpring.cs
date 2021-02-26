@@ -42,14 +42,21 @@ public class step02pdb_twoSpring : MonoBehaviour
     void solvePBD()
     {
         float len0=10f; ///原始長度為 0.5
-        float x=x1-x2, y=y1-y2, z=z1-z2; ///原始的公式中 用來算 cost function 的輔助變數
-        float C = Mathf.Sqrt(x*x+y*y+z*z) - len0; ///原始的cost function
-        {
-            x=x2-x3;
-            y=y2-y3;
-            z=z2-z3;
-            C += Mathf.Sqrt(x*x+y*y+z*z) - len0;
-        }
+        //float x=x1-x2, y=y1-y2, z=z1-z2; ///原始的公式中 用來算 cost function 的輔助變數
+        //float C = Mathf.Sqrt(x*x+y*y+z*z) - len0; ///原始的cost function
+        //{
+        //    x=x2-x3;
+        //    y=y2-y3;
+        //    z=z2-z3;
+        //    C += Mathf.Sqrt(x*x+y*y+z*z) - len0;
+        //}        //float x=x1-x2, y=y1-y2, z=z1-z2; ///原始的公式中 用來算 cost function 的輔助變數
+        //float C = Mathf.Sqrt(x*x+y*y+z*z) - len0; ///原始的cost function
+        //{
+        //    x=x2-x3;
+        //    y=y2-y3;
+        //    z=z2-z3;
+        //    C += Mathf.Sqrt(x*x+y*y+z*z) - len0;
+        //}
 
         //以下已利用 Automatic Differentiation 技巧, 配合 operator overloading 完成
         ///細讀 Stam 第14章, 了解 (1) 控制變數 x1,y1,z1, x2,y2,z2 有6個, 所以 dfloat<6>
@@ -91,6 +98,7 @@ public class step02pdb_twoSpring : MonoBehaviour
             len2 += gC.val(i)*gC.val(i); ///要算出分母 (gradient的長度平方)
         }
         len2 = Mathf.Sqrt(len2);
+        float C = gC.val(0); //其實 cost function C的, 就存在 gC 的第[0]項
         x1+=(-C/len2)*gC.val(1); ///posBasedDyn.pdf 的公式(5) 算出 delta P 回去改 P
         y1+=(-C/len2)*gC.val(2);
         z1+=(-C/len2)*gC.val(3);

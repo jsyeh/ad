@@ -83,21 +83,25 @@ public class step02pdb_twoSpring : MonoBehaviour
 
         ///這裡的 dx 是前面 x=x1-x2 去做 dfloat 計算的意思
         dfloat dx=dx1-dx2, dy=dy1-dy2, dz=dz1-dz2; ///AD公式, 用來算 cost function 的輔助變數
-        dfloat gC = dfloat.dsqrt(dx*dx+dy*dy+dz*dz) - len0; ///AD公式, cost function, gC[1]..gC[6]是gradient
+        dfloat dlenA = dfloat.dsqrt(dx * dx + dy * dy + dz * dz);
+        dfloat dxx = dx2 - dx3, dyy = dy2 - dy3, dzz = dz2 - dz3;
+        dfloat dlenB = dfloat.dsqrt(dxx * dxx + dyy * dyy + dzz * dzz);
 
-        {
-            dx=dx2-dx3;
-            dy=dy2-dy3;
-            dz=dz2-dz3; ///AD公式, 用來算 cost function 的輔助變數
-            gC += dfloat.dsqrt(dx*dx+dy*dy+dz*dz) - len0; ///AD公式, cost function, gC[1]..gC[6]是gradient
-        } //可能出錯的地方: (1) stretch 的 dx 的正負方向, (2) cost function是相加嗎? (3) 要恢復1個月前的記憶
-        //在公式10,公式11裡, 右邊有單位向量
+        dfloat gC = dlenA- len0; ///AD公式, cost function, gC[1]..gC[6]是gradient
+        gC += dlenB - len0; ///AD公式, cost function, gC[1]..gC[6]是gradient
+        //Q: cost function是相加嗎? Yes! TODO要恢復1個月前的記憶
+        //bending,直接拿線段的向量來做
+        print(dlenA.val(0) +" "+ dlenB.val(0));
+        gC += dfloat.dacos((dx * dxx + dy * dyy + dz * dzz) / dlenA / dlenB);
+        print("acos's input val[0]:" + ((dx * dxx + dy * dyy + dz * dzz) / dlenA / dlenB).val(0));
 
         float len2=0; ///posBasedDyn.pdf 的公式(5)
         for(int i=1; i<=9; i++){
             len2 += gC.val(i)*gC.val(i); ///要算出分母 (gradient的長度平方)
         }
         len2 = Mathf.Sqrt(len2);
+
+        print(gC.val(0) + " " + gC.val(1) + " " + gC.val(2) + " " + gC.val(3));
         float C = gC.val(0); //其實 cost function C的, 就存在 gC 的第[0]項
         x1+=(-C/len2)*gC.val(1); ///posBasedDyn.pdf 的公式(5) 算出 delta P 回去改 P
         y1+=(-C/len2)*gC.val(2);

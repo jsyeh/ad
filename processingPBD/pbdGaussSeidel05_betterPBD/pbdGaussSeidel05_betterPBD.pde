@@ -188,5 +188,5 @@ void keyPressed(){
     for(int i=0;i<N;i++){
       pos[i].sub(c).add(c2);
     }
-  
+  }  
 }

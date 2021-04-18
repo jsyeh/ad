@@ -10,6 +10,7 @@ public class step03pbd_muller2006 : MonoBehaviour
     Vector3 [] v =new Vector3[N];
     Vector3 [] pos = new Vector3[N];
     Vector3 [] pos0 = new Vector3[N];
+    int frame=0;
     void Start()
     {
         for(int i=0; i<N; i++){
@@ -25,6 +26,8 @@ public class step03pbd_muller2006 : MonoBehaviour
 
     void Update()
     {
+        frame++;
+        if(frame%2==0) return;
         solver();
         for(int i=1; i<N; i++){
             sphere[i].transform.position = pos0[i];
@@ -122,7 +125,7 @@ public class step03pbd_muller2006 : MonoBehaviour
     }
     void solver()
     {
-        Vector3 g = new Vector3(0, -0.0098f, 0);
+        Vector3 g = new Vector3(0, -0.98f/20, 0);
         for(int i=1; i<N; i++){
             v[i] += g;//Step (5) 還沒有乘上 delta T 及重量
             pos[i] = pos0[i]+v[i];//Step (7)

@@ -175,6 +175,7 @@ public class step05pbd_muller2006ad : MonoBehaviour
             // }
             //print("gradientSum:"+gradientSum);
             if(float.IsNaN(gradientSum)) continue;
+            //https://answers.unity.com/questions/462718/how-to-check-for-nan.html
             if(gradientSum<0.0000001){
                 print("gradient sum very small");
                 continue;

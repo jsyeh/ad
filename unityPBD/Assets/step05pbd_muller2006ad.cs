@@ -130,11 +130,18 @@ public class step05pbd_muller2006ad : MonoBehaviour
                 gradient[Xi].y = gC.val(Xi*3+1+1);
                 gradient[Xi].z = gC.val(Xi*3+2+1);
                 Vector3 diff= gradient[Xi] * - lambda*w[Xi];
-                pos[Xi] += diff;
+                pos[Xi] += diff *(1-stiffness);
                 if(diff.magnitude>maxMag) maxMag=diff.magnitude;
             }
         }
     }
+    int solverIterators=20; //Iteration越多,越硬的感覺
+    float stiffness=0.9f; //0.0f-1.0f, 這個k值在論文 3.3 最後面有解釋 diff*(1-k)^ns, 越大越軟
+    // solverIterators vs. stiffness
+    //   1                     0    =>軟軟的
+    //  20                     0    =>很硬
+    //   2                     0.5  =>軟
+    //  20                     0.9 
     void solver() //Update()會呼叫 solver
     {
         Vector3 g = new Vector3(0, -0.98f/20, 0);
@@ -144,11 +151,14 @@ public class step05pbd_muller2006ad : MonoBehaviour
             v[i] *=0.9f; //這裡加大磨擦力,讓系統慢慢停住
         }
 
-        projectConstraints();
+        for(int i=0; i<solverIterators; i++){ //Step (09) Loop
+            projectConstraints(); //Step (10)
+        } //Step (11) End Loop
 
-        for(int i=1; i<N; i++){
+        for(int i=1; i<N; i++){ //Step (12)
             v[i] = pos[i] - pos0[i]; //Step (13)
             pos0[i] = pos[i]; //Step (14)
-        }
+        } //Step (15) 
+        //Step (16) updateVelocities()
     }
 }
